@@ -11,3 +11,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def test_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'questions/test_list.html', {'test_list': models.Test.objects.all()})
+
+def test_questions(request: HttpRequest, name: str) -> HttpResponse:
+    return render(request, 'questions/test_questions.html',
+                  {'test': models.Question.objects.filter(test__name=name), 'name': name})
