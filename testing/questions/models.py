@@ -57,6 +57,8 @@ class Option(models.Model):
 class StudentAnswer(models.Model):
     student = models.ForeignKey(get_user_model(), verbose_name=_("student"),
                                 on_delete=models.CASCADE, related_name="studentanswers")
+    question = models.ForeignKey(Question, verbose_name=_("question"),
+                                 on_delete=models.CASCADE, related_name="studentanswers")
     option = models.ForeignKey(Option, verbose_name=_("option"),
                                on_delete=models.CASCADE, related_name="studentanswers")
 
@@ -65,7 +67,7 @@ class StudentAnswer(models.Model):
         verbose_name_plural = _("studentanswers")
 
     def __str__(self):
-        return self.student
+        return self.option.text
 
     def get_absolute_url(self):
         return reverse("studentanswer_detail", kwargs={"pk": self.pk})
