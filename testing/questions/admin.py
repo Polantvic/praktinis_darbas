@@ -11,23 +11,28 @@ class TestAdmin(admin.ModelAdmin):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['text', 'answers', 'test']
-    readonly_fields = ['answers']
-    fieldsets = ((None, {"fields": ('test', 'text', 'answers')}),)
+    list_display = ['text', 'all_answers', 'test']
+    readonly_fields = ['all_answers']
+    fieldsets = ((None, {"fields": ('test', 'text', 'all_answers')}),)
 
-    def answers(self, obj: models.Question):
-        return "; ".join(obj.options.values_list('text', flat=True))
+    def all_answers(self, obj: models.Question):
+        return "; ".join(obj.answers.values_list('text', flat=True))
 
 
-class OptionAdmin(admin.ModelAdmin):
-    pass
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['text', 'choice', 'question']
+    ordering = ['question']
 
 
 class StudentAnswerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['student', 'question', 'answer', 'result']
+    readonly_fields = ['result']
+
+    def result(self, obj: models.StudentAnswer):
+        return obj.answer.choice
 
 
 admin.site.register(models.Test, TestAdmin)
 admin.site.register(models.Question, QuestionAdmin)
-admin.site.register(models.Option, OptionAdmin)
+admin.site.register(models.Answer, AnswerAdmin)
 admin.site.register(models.StudentAnswer, StudentAnswerAdmin)

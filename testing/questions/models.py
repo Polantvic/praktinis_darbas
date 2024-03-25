@@ -37,21 +37,21 @@ class Question(models.Model):
         return reverse("question_detail", kwargs={"pk": self.pk})
 
 
-class Option(models.Model):
+class Answer(models.Model):
     text = models.CharField(_("text"), max_length=500, db_index=True)
     choice = models.BooleanField(_("choice"), default=False, db_index=True)
     question = models.ForeignKey(Question, verbose_name=_("question"),
-                                 on_delete=models.CASCADE, related_name="options")
+                                 on_delete=models.CASCADE, related_name="answers")
 
     class Meta:
-        verbose_name = _("option")
-        verbose_name_plural = _("options")
+        verbose_name = _("answer")
+        verbose_name_plural = _("answers")
 
     def __str__(self):
         return self.text
 
     def get_absolute_url(self):
-        return reverse("option_detail", kwargs={"pk": self.pk})
+        return reverse("answer_detail", kwargs={"pk": self.pk})
 
 
 class StudentAnswer(models.Model):
@@ -59,7 +59,7 @@ class StudentAnswer(models.Model):
                                 on_delete=models.CASCADE, related_name="studentanswers")
     question = models.ForeignKey(Question, verbose_name=_("question"),
                                  on_delete=models.CASCADE, related_name="studentanswers")
-    option = models.ForeignKey(Option, verbose_name=_("option"),
+    answer = models.ForeignKey(Answer, verbose_name=_("answer"),
                                on_delete=models.CASCADE, related_name="studentanswers")
 
     class Meta:
@@ -67,7 +67,7 @@ class StudentAnswer(models.Model):
         verbose_name_plural = _("studentanswers")
 
     def __str__(self):
-        return self.option.text
+        return self.answer.text
 
     def get_absolute_url(self):
         return reverse("studentanswer_detail", kwargs={"pk": self.pk})
