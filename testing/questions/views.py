@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from . import models
 
 
@@ -14,4 +14,13 @@ def test_list(request: HttpRequest) -> HttpResponse:
 
 def test_questions(request: HttpRequest, name: str) -> HttpResponse:
     return render(request, 'questions/test_questions.html',
-                  {'test': models.Question.objects.filter(test__name=name), 'name': name})
+                  {'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
+                   'answers': get_list_or_404(models.Answer.objects.all()), 'name': name})
+
+def select_answer(request: HttpRequest, name: str, pk: int) -> HttpResponse:
+    selected_answer = get_object_or_404(models.Answer, pk=pk)
+    selected_answer.choice = not selected_answer.choice
+    selected_answer.save()
+    return render(request, 'questions/test_questions.html',
+            {'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
+            'answers': get_list_or_404(models.Answer.objects.all()), 'name': name})

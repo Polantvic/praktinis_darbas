@@ -2,6 +2,12 @@
 {% block title %}{{ block.super }} {{ name }}{% endblock title %}
 {% block content %}
     {% for question in test %} 
-        <p>{{ question }}</p>
+        <li>{{ question }}?</li>
+        {% for answer in answers %}
+            {% if answer.question == question %}
+                <ul><a href="{% url 'select_answer' name answer.pk %}">
+                {% if answer.choice %}&#x2611;{% else %}&#x2610;{% endif %} {{ answer }}</a></ul>
+            {% endif %}
+        {% endfor %}
     {% endfor %}
 {% endblock content %}
