@@ -1,0 +1,88 @@
+body {
+    background-color: #2C2E34;
+    font-family: sans-serif;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    margin: 0; padding: 0;
+    min-height: 100vh;
+    color: #fff;
+}
+
+a {
+    color: #FDA703;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    border-bottom: 1px solid #888888;
+    padding: 0.5rem;
+    margin: 1rem 0;
+}
+
+h1:first-child, h2:first-child, h3:first-child, 
+h4:first-child, h5:first-child, h6:first-child {
+    margin-top: 0;
+}
+
+p, main ul {
+    padding: 0 2rem;
+    margin: 1rem 0;
+}
+
+main ul li {
+    border-bottom: 1px solid #999999;
+}
+
+header {
+    background-color:#2C2E34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0.5rem;
+}
+
+header ul.nav {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin-block: 0.5rem;
+    padding-inline: 0;
+    gap: 1px;
+}
+
+header ul.nav li a, header ul.nav li form button {
+    background-color: #aaaaaa;
+    display: block;
+    margin: 0;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 2px solid #004488;
+    cursor: pointer;
+    color: #004488;
+    font-size: 100%;
+}
+
+header ul.nav li a:hover, header ul.nav li form button:hover {
+    background-color: #b8b8b8;
+    border-bottom: 2px solid #0055cc;
+    color: #0055cc;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    background-color: #2C2E34;
+}

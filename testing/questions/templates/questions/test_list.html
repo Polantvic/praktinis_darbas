@@ -3,6 +3,6 @@
 {% block content %}
     <h1>Tests</h1>
     {% for test in test_list %}
-        <p><a href="{% url 'test_questions' test %}">{{ test }}</a></p>
+        <p><a href="{% url 'test_questions' test %}">{{ test|capfirst }}</a></p>
     {% endfor %}
 {% endblock content %}
