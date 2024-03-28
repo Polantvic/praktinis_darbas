@@ -90,7 +90,7 @@ class StudentResult(models.Model):
         verbose_name_plural = _("studentresults")
 
     def __str__(self):
-        return self.result
+        return self.student.get_username()
 
     def get_absolute_url(self):
         return reverse("studentresult_detail", kwargs={"pk": self.pk})

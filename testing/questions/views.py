@@ -23,15 +23,23 @@ def test_questions(request: HttpRequest, name: str) -> HttpResponse:
 def select_answer(request: HttpRequest, name: str, pk: int) -> HttpResponse:
     selected_answer = get_object_or_404(models.Answer, pk=pk)
 
+    def is_correct_choice(selected_answer):
+            if selected_answer.choice == True:
+                return True
+            else:
+                return False
+
     try:
         student_choice = get_object_or_404(models.StudentAnswer, student=request.user, question=selected_answer.question)
         if student_choice.answer == selected_answer:
             student_choice.delete()
         else:
             student_choice.answer = selected_answer
+            student_choice.is_correct = is_correct_choice(selected_answer)
             student_choice.save()
     except:
-        student_choice = models.StudentAnswer(student=request.user, question=selected_answer.question, answer=selected_answer)
+        student_choice = models.StudentAnswer(student=request.user, question=selected_answer.question,
+                                              answer=selected_answer, is_correct=is_correct_choice(selected_answer))
         student_choice.save()
 
     return render(request, 'questions/test_questions.html',

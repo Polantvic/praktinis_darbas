@@ -33,7 +33,12 @@ class StudentAnswerAdmin(admin.ModelAdmin):
         return obj.answer.choice
 
 
+class StudentResultAdmin(admin.ModelAdmin):
+    list_display = ['student', 'test', 'amount_questions', 'result', 'is_done']
+
+
 admin.site.register(models.Test, TestAdmin)
 admin.site.register(models.Question, QuestionAdmin)
 admin.site.register(models.Answer, AnswerAdmin)
 admin.site.register(models.StudentAnswer, StudentAnswerAdmin)
+admin.site.register(models.StudentResult, StudentResultAdmin)
