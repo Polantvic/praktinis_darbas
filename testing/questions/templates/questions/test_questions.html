@@ -1,13 +1,21 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} {{ name }}{% endblock title %}
 {% block content %}
+    <h1>Questions</h1>
     {% for question in test %} 
         <li>{{ question }}?</li>
         {% for answer in answers %}
             {% if answer.question == question %}
                 <ul><a href="{% url 'select_answer' name answer.pk %}">
-                {% if answer.choice %}&#x2611;{% else %}&#x2610;{% endif %} {{ answer }}</a></ul>
+                {% for student_answer in student_answers %}
+                    {% if student_answer.question == answer.question and student_answer.answer == answer %}                        
+                        &#128073;
+                    {% endif %}
+                {% endfor %}              
+                &#10687;</a> {{ answer }}</ul>
             {% endif %}
         {% endfor %}
     {% endfor %}
 {% endblock content %}
+
+{% comment %} &#x2610; &#x2611; &#187; &#127383; &#10687;{% endcomment %}

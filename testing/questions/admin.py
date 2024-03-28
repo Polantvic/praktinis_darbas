@@ -22,6 +22,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ['text', 'choice', 'question']
     ordering = ['question']
+    fieldsets = ((None, {"fields": ('test', 'question', 'text', 'choice')}),)
 
 
 class StudentAnswerAdmin(admin.ModelAdmin):

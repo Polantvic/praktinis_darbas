@@ -42,6 +42,8 @@ class Answer(models.Model):
     choice = models.BooleanField(_("choice"), default=False, db_index=True)
     question = models.ForeignKey(Question, verbose_name=_("question"),
                                  on_delete=models.CASCADE, related_name="answers")
+    test = models.ForeignKey(Test, verbose_name=_("test"), on_delete=models.CASCADE,
+                             related_name="answers")
 
     class Meta:
         verbose_name = _("answer")
