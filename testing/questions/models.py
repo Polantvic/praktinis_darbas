@@ -63,6 +63,7 @@ class StudentAnswer(models.Model):
                                  on_delete=models.CASCADE, related_name="studentanswers")
     answer = models.ForeignKey(Answer, verbose_name=_("answer"),
                                on_delete=models.CASCADE, related_name="studentanswers")
+    is_correct = models.BooleanField(_("is_correct"), default=False)
 
     class Meta:
         verbose_name = _("studentanswer")
@@ -73,3 +74,23 @@ class StudentAnswer(models.Model):
 
     def get_absolute_url(self):
         return reverse("studentanswer_detail", kwargs={"pk": self.pk})
+
+
+class StudentResult(models.Model):
+    student = models.ForeignKey(get_user_model(), verbose_name=_("student"),
+                                on_delete=models.CASCADE, related_name="studentresults")
+    test = models.ForeignKey(Test, verbose_name=_("test"), on_delete=models.CASCADE,
+                             related_name="studentresults")
+    is_done = models.BooleanField(_("is_done"), default=False, db_index=True)
+    result = models.IntegerField(_("result"), default=-1)
+    amount_questions = models.SmallIntegerField(_("amount_questions"), default=0)
+
+    class Meta:
+        verbose_name = _("studentresult")
+        verbose_name_plural = _("studentresults")
+
+    def __str__(self):
+        return self.result
+
+    def get_absolute_url(self):
+        return reverse("studentresult_detail", kwargs={"pk": self.pk})

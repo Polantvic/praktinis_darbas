@@ -6,6 +6,7 @@ from . import models
 def index(request: HttpRequest) -> HttpResponse:
     context = {
         'tests_count': models.Test.objects.count(),
+        'user': request.user,
     }
     return render(request, 'questions/index.html', context)
 
@@ -14,7 +15,8 @@ def test_list(request: HttpRequest) -> HttpResponse:
 
 def test_questions(request: HttpRequest, name: str) -> HttpResponse:
     return render(request, 'questions/test_questions.html',
-                  {'name': name, 'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
+                  {'name': name, 'user': request.user,
+                   'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
                    'answers': get_list_or_404(models.Answer.objects.filter(test__name=name)),
                    'student_answers': models.StudentAnswer.objects.filter(student=request.user)})
 
@@ -33,6 +35,7 @@ def select_answer(request: HttpRequest, name: str, pk: int) -> HttpResponse:
         student_choice.save()
 
     return render(request, 'questions/test_questions.html',
-            {'name': name, 'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
+            {'name': name, 'user': request.user,
+             'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
             'answers': get_list_or_404(models.Answer.objects.filter(test__name=name)),
             'student_answers': models.StudentAnswer.objects.filter(student=request.user)})
