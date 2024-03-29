@@ -14,6 +14,13 @@ def test_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'questions/test_list.html', {'test_list': models.Test.objects.all()})
 
 def test_questions(request: HttpRequest, name: str) -> HttpResponse:
+    studentesult = models.StudentResult.objects.filter(student=request.user, test__name=name).first()
+
+    if studentesult is not None:
+        return render(request, 'questions/student_result.html',
+                {'user': request.user, 'result': studentesult.result,
+                'questions': studentesult.amount_questions})
+                                        
     return render(request, 'questions/test_questions.html',
                   {'name': name, 'user': request.user,
                    'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
