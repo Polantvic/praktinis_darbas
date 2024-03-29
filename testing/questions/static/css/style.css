@@ -61,18 +61,6 @@ header ul.nav {
     gap: 1px;
 }
 
-header ul.nav li a, header ul.nav li form button {
-    background-color: #aaaaaa;
-    display: block;
-    margin: 0;
-    padding: 0.5rem;
-    border: none;
-    border-bottom: 2px solid #004488;
-    cursor: pointer;
-    color: #004488;
-    font-size: 100%;
-}
-
 header ul.nav li a:hover, header ul.nav li form button:hover {
     background-color: #b8b8b8;
     border-bottom: 2px solid #0055cc;
@@ -81,6 +69,35 @@ header ul.nav li a:hover, header ul.nav li form button:hover {
 
 main {
     flex-grow: 1;
+}
+
+main ul.rez {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin-block: 0.5rem;
+    margin-left: 1rem;
+    padding-inline: 0.5;
+    gap: 0.5rem;
+}
+
+main ul.rez a {
+    background-color: #000000;
+    display: block;
+    margin: 0;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    cursor: pointer;
+    color: #FDA703;
+    font-size: 100%;
+}
+
+main ul.rez a:hover {
+    background-color: b8b8b8;
+    border-bottom: 2px solid #0055cc;
+    color: #0055cc;
+    text-decoration: none;
 }
 
 footer {
