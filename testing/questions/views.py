@@ -47,3 +47,25 @@ def select_answer(request: HttpRequest, name: str, pk: int) -> HttpResponse:
              'test': get_list_or_404(models.Question.objects.filter(test__name=name)),
             'answers': get_list_or_404(models.Answer.objects.filter(test__name=name)),
             'student_answers': models.StudentAnswer.objects.filter(student=request.user)})
+
+def student_result(request: HttpRequest, name: str) -> HttpResponse:
+    student_answers = models.StudentAnswer.objects.filter(student=request.user, answer__test__name=name)
+    true_answers = models.Answer.objects.filter(test__name=name, choice=True)
+    questions = models.Question.objects.filter(test__name=name)
+    amount_questions = questions.count()
+    result = 0
+
+    for question in questions:
+        student_answer = student_answers.filter(question=question).first()
+        true_answer = true_answers.filter(question=question).first()
+        if student_answer.answer == true_answer:
+            result += 1
+
+    test = models.Test.objects.filter(name=name).first()
+    current_student_result = models.StudentResult(student=request.user, test=test, is_done=True,
+                                                  result=result, amount_questions=amount_questions)
+    current_student_result.save()
+
+    return render(request, 'questions/student_result.html',
+                  {'user': request.user, 'result': current_student_result.result,
+                   'questions': current_student_result.amount_questions})

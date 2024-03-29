@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} result {% endblock title %}
+{% block content %}
+    <h2>Your testing result {{ user }}</h2>
+    <h3>Result is: {{ result }} points out of {{ questions }} !</h3>
+    {% comment %} <h2>{{ result }}</h2> {% endcomment %}
+
+    <ul><a href="{% url 'index' %}">Back to Main page</a></ul>
+{% endblock content %}
