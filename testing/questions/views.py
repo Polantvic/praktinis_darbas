@@ -65,8 +65,9 @@ def student_result(request: HttpRequest, name: str) -> HttpResponse:
     for question in questions:
         student_answer = student_answers.filter(question=question).first()
         true_answer = true_answers.filter(question=question).first()
-        if student_answer.answer == true_answer:
-            result += 1
+        if student_answer is not None:
+            if student_answer.answer == true_answer:
+                result += 1
 
     test = models.Test.objects.filter(name=name).first()
     current_student_result = models.StudentResult(student=request.user, test=test, is_done=True,
